@@ -1,0 +1,3705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evento - Premium Event Venues</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600;700&display=swap" rel="stylesheet">
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    :root {
+      --main-color: #3867d6;
+      --success-color: #20bf6b;
+      --danger-color: #ff4757;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+      text-decoration: none;
+      text-transform: capitalize;
+      transition: 0.2s linear;
+    }
+
+    body {
+      background: #111;
+      color: #fff;
+      padding-top: 80px;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 9%;
+      height: 60px;
+    }
+
+    .header .logo {
+      font-weight: bold;
+      color: #fff;
+      font-size: 2.5rem;
+    }
+
+    .header .logo span {
+      color: var(--main-color);
+    }
+
+    .header .navbar {
+      display: flex;
+      align-items: center;
+    }
+
+    .header .navbar a {
+      font-size: 1.7rem;
+      color: #fff;
+      margin-left: 2rem;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .header .navbar a:hover {
+      color: var(--main-color);
+    }
+
+    /* Admin Panel Button Style */
+    .header .navbar a.admin-panel-btn {
+      background: linear-gradient(45deg, #ff0000, #ff6b6b) !important;
+      color: white !important;
+      padding: 8px 20px !important;
+      border-radius: 20px !important;
+      font-weight: bold !important;
+      transition: all 0.3s ease !important;
+      border: 2px solid #ffd700 !important;
+      margin-left: 2rem !important;
+    }
+
+    .header .navbar a.admin-panel-btn:hover {
+      background: linear-gradient(45deg, #ff6b6b, #ff0000) !important;
+      transform: scale(1.05) !important;
+      box-shadow: 0 0 15px rgba(255, 107, 107, 0.7) !important;
+      color: white !important;
+    }
+
+    /* Logout Button Style */
+    .header .navbar a.logout-btn {
+      background: #e74c3c !important;
+      color: white !important;
+      padding: 8px 20px !important;
+      border-radius: 20px !important;
+      font-weight: bold !important;
+      transition: all 0.3s ease !important;
+      margin-left: 1rem !important;
+    }
+
+    .header .navbar a.logout-btn:hover {
+      background: #c0392b !important;
+      transform: scale(1.05) !important;
+    }
+
+    #menu-bars {
+      font-size: 3rem;
+      color: #fff;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 2.5rem;
+      margin-bottom: 80px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+    }
+
+    .hero h1 span {
+      color: var(--main-color);
+    }
+
+    /* Swiper */
+    .swiper {
+      width: 90%;
+      max-width: 1200px;
+      height: 400px;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none !important;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: var(--main-color);
+    }
+
+    /* Services */
+    .services {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto 70px auto;
+      background: #222;
+      border-radius: 1rem;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .services h2 {
+      font-size: 3rem;
+      color: var(--main-color);
+      margin-bottom: 2.5rem;
+    }
+
+    .service-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .service-item {
+      background: #333;
+      padding: 2.2rem;
+      border-radius: .8rem;
+      transition: 0.3s;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .service-item:hover {
+      transform: translateY(-7px);
+      background: var(--main-color);
+    }
+
+    .service-item.booked {
+      background: var(--success-color) !important;
+      cursor: not-allowed;
+    }
+
+    .service-item.booked:hover {
+      transform: none;
+      background: var(--success-color) !important;
+    }
+
+    .booked-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--success-color);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      display: none;
+    }
+
+    .service-item.booked .booked-badge {
+      display: block;
+    }
+
+    .service-item i {
+      font-size: 3rem;
+      color: var(--main-color);
+      margin-bottom: 1rem;
+    }
+
+    .service-item:hover i,
+    .service-item.booked i {
+      color: #fff;
+    }
+
+    .service-item h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Service Detail Modal */
+    .service-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .service-modal.active {
+      display: flex;
+    }
+
+    .service-modal-container {
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      background: #222;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-modal-header {
+      background: #333;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--main-color);
+    }
+
+    .service-modal-header h3 {
+      color: var(--main-color);
+      font-size: 2rem;
+    }
+
+    .service-modal-close {
+      background: var(--main-color);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .service-modal-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .service-modal-image {
+      flex: 1;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .service-modal-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .service-modal-info {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+      background: #333;
+    }
+
+    .service-modal-info h4 {
+      color: var(--main-color);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--main-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .service-modal-info p {
+      color: #ccc;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-features {
+      margin: 2rem 0;
+    }
+
+    .service-features h5 {
+      color: var(--main-color);
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-features ul {
+      list-style: none;
+      padding-left: 1rem;
+    }
+
+    .service-features li {
+      color: #ccc;
+      margin-bottom: 0.8rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .service-features li:before {
+      content: '✓';
+      color: var(--main-color);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .service-packages {
+      margin: 2rem 0;
+    }
+
+    .service-packages h5 {
+      color: var(--main-color);
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .package-item {
+      background: #444;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .package-name {
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .package-price {
+      color: var(--main-color);
+      font-weight: bold;
+    }
+
+    .service-modal-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--main-color);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #2a52c4;
+      transform: translateY(-2px);
+    }
+
+    .btn-primary.booked {
+      background: var(--success-color);
+      cursor: not-allowed;
+    }
+
+    .btn-primary.booked:hover {
+      background: var(--success-color);
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #fff;
+      border: 2px solid var(--main-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--main-color);
+      transform: translateY(-2px);
+    }
+
+    /* About */
+    .about {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto 70px auto;
+      background: #222;
+      border-radius: 1rem;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .about h2 {
+      font-size: 3rem;
+      color: var(--main-color);
+      margin-bottom: 2.5rem;
+    }
+
+    .about-description {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 3rem;
+      line-height: 1.6;
+    }
+
+    .branches-section {
+      margin-top: 3rem;
+    }
+
+    .branches-section h3 {
+      font-size: 2.5rem;
+      color: var(--main-color);
+      margin-bottom: 2rem;
+    }
+
+    .branches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .branch-card {
+      background: #333;
+      padding: 1.5rem;
+      border-radius: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .branch-card:hover {
+      background: var(--main-color);
+      transform: translateY(-5px);
+    }
+
+    .branch-card.active {
+      background: var(--main-color);
+      border: 2px solid #fff;
+      transform: translateY(-5px);
+    }
+
+    .branch-card.booked {
+      background: var(--success-color) !important;
+      cursor: not-allowed;
+    }
+
+    .branch-card.booked:hover {
+      transform: none;
+      background: var(--success-color) !important;
+    }
+
+    .branch-image {
+      width: 100%;
+      height: 120px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .branch-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .branch-card:hover .branch-image img {
+      transform: scale(1.1);
+    }
+
+    .branch-card i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .branch-card h4 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .branch-card p {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .hall-display-section {
+      margin-top: 2rem;
+      padding: 2rem;
+      background: #333;
+      border-radius: 1rem;
+      display: none;
+    }
+
+    .hall-display-section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hall-display-content {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hall-image {
+      flex: 1;
+    }
+
+    .hall-image img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .hall-info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .hall-info h4 {
+      font-size: 2rem;
+      color: var(--main-color);
+      margin-bottom: 1rem;
+    }
+
+    .hall-info p {
+      color: #ccc;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .hall-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature-item i {
+      color: var(--main-color);
+      font-size: 1.2rem;
+    }
+
+    .feature-item span {
+      color: #fff;
+    }
+
+    .hall-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* Virtual Tour Modal */
+    .virtual-tour-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .virtual-tour-modal.active {
+      display: flex;
+    }
+
+    .tour-container {
+      width: 90%;
+      max-width: 1200px;
+      height: 80vh;
+      background: #222;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tour-header {
+      background: #333;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tour-header h3 {
+      color: var(--main-color);
+      font-size: 1.5rem;
+    }
+
+    .tour-close {
+      background: var(--main-color);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .tour-content {
+      height: calc(100% - 70px);
+      display: flex;
+    }
+
+    .tour-view {
+      flex: 3;
+      background: #111;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tour-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.5s ease;
+    }
+
+    .tour-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+    }
+
+    .tour-nav-btn {
+      background: rgba(56, 103, 214, 0.8);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: 0.3s;
+    }
+
+    .tour-nav-btn:hover {
+      background: var(--main-color);
+      transform: scale(1.1);
+    }
+
+    .tour-info {
+      flex: 1;
+      background: #333;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .tour-info h4 {
+      color: var(--main-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tour-hotspots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hotspot-btn {
+      background: #444;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .hotspot-btn.active {
+      background: var(--main-color);
+    }
+
+    .hotspot-btn:hover {
+      background: var(--main-color);
+    }
+
+    /* Gallery Section */
+    .gallery {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto 70px auto;
+      background: #222;
+      padding: 3rem 2rem;
+      border-radius: 1rem;
+      text-align: center;
+    }
+
+    .gallery h2 {
+      color: var(--main-color);
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .gallery-subtitle {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .gallery-card {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      height: 250px;
+      cursor: pointer;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(56, 103, 214, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-card:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .gallery-action-btn {
+      background: #fff;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--main-color);
+      font-size: 1.2rem;
+    }
+
+    .gallery-action-btn:hover {
+      background: var(--main-color);
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    /* Lightbox Styles */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 80%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 3rem;
+      cursor: pointer;
+      background: var(--main-color);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2001;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      transform: translateY(-50%);
+    }
+
+    .lightbox-nav button {
+      background: var(--main-color);
+      color: #fff;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: 0.3s;
+    }
+
+    .lightbox-nav button:hover {
+      background: #fff;
+      color: var(--main-color);
+    }
+
+    .lightbox-caption {
+      color: #fff;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    /* Like Animation */
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    .liked {
+      color: #e74c3c !important;
+      animation: heartBeat 0.6s ease;
+    }
+
+    /* Pricing */
+    .price-section {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto 70px auto;
+      background: #222;
+      border-radius: 1rem;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .price-section h2 {
+      font-size: 3rem;
+      color: var(--main-color);
+      margin-bottom: 2.5rem;
+    }
+
+    .pricing-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .price-card {
+      background: #333;
+      padding: 2rem;
+      border-radius: 1rem;
+      min-width: 250px;
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .price-card:hover {
+      transform: translateY(-5px);
+      background: var(--main-color);
+    }
+
+    .price-card.booked {
+      background: var(--success-color) !important;
+    }
+
+    .price-card.booked:hover {
+      transform: none;
+      background: var(--success-color) !important;
+    }
+
+    .price-card h3 {
+      background: var(--main-color);
+      padding: .6rem;
+      border-radius: .5rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .price-card.booked h3 {
+      background: var(--success-color);
+    }
+
+    .price-card .price {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 1rem 0;
+      color: var(--main-color);
+    }
+
+    .price-card:hover .price,
+    .price-card.booked .price {
+      color: #fff;
+    }
+
+    .price-card ul {
+      list-style: none;
+      text-align: left;
+      margin: 1.5rem 0;
+      color: #ccc;
+    }
+
+    .price-card ul li { 
+      margin-bottom: .8rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .price-card ul li:before {
+      content: '✔';
+      color: var(--main-color);
+      position: absolute;
+      left: 0;
+    }
+
+    .price-card:hover ul li:before,
+    .price-card.booked ul li:before {
+      color: #fff;
+    }
+
+    .price-card button {
+      background: var(--main-color);
+      color: #fff;
+      border: none;
+      padding: .8rem 1.5rem;
+      border-radius: .5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .price-card.booked button {
+      background: var(--success-color);
+      cursor: not-allowed;
+    }
+
+    .price-card:hover button { 
+      background: #111; 
+    }
+
+    .price-card.booked:hover button {
+      background: var(--success-color);
+    }
+
+    .price-card button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .price-card.booked button:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Footer */
+    .footer {
+      background: #222;
+      padding: 3rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-section h3 {
+      color: var(--main-color);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-section ul li a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .footer-section ul li a:hover {
+      color: var(--main-color);
+    }
+
+    /* Admin Link in Footer */
+    .footer-section ul li a.admin-footer-link {
+      color: #ffd700 !important;
+      font-weight: bold !important;
+    }
+
+    .footer-section ul li a.admin-footer-link:hover {
+      color: #fff !important;
+      background: #ffd700 !important;
+      padding: 2px 8px !important;
+      border-radius: 4px !important;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      color: #ccc;
+      font-size: 1.5rem;
+    }
+
+    .social-links a:hover {
+      color: var(--main-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #444;
+      color: #ccc;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      #menu-bars { display: block; }
+      .header .navbar {
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: #333;
+        flex-direction: column;
+        display: none;
+        padding: 2rem 0;
+      }
+      .header .navbar.active { display: flex; }
+      .header .navbar a {
+        padding: 1rem;
+        margin: 0.5rem 2rem;
+        background: #222;
+        border-radius: .5rem;
+        font-size: 2rem;
+        text-align: center;
+        width: 90%;
+        margin-left: 0;
+      }
+      
+      .header .navbar a.admin-panel-btn,
+      .header .navbar a.logout-btn {
+        margin: 0.5rem 2rem !important;
+        text-align: center !important;
+        display: block !important;
+        width: 90% !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .price-card { width: 100%; }
+      .services, .gallery, .price-section, .about {
+        padding: 1.5rem 0.5rem;
+      }
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      .lightbox-nav {
+        padding: 0 10px;
+      }
+      .lightbox-nav button {
+        width: 40px;
+        height: 40px;
+      }
+      .lightbox-close {
+        top: 10px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 2rem;
+      }
+      .branches-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hall-display-content {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .hall-info {
+        text-align: center;
+      }
+      .hall-features {
+        grid-template-columns: 1fr;
+      }
+      .hall-actions {
+        justify-content: center;
+      }
+      .branch-image {
+        height: 100px;
+      }
+      .tour-content {
+        flex-direction: column;
+      }
+      .tour-info {
+        max-height: 200px;
+      }
+      .service-modal-content {
+        flex-direction: column;
+      }
+      .service-modal-image {
+        max-height: 300px;
+      }
+    }
+
+    /* New Styles for Booking Functionality */
+    .selected-items-panel {
+      position: fixed;
+      top: 100px;
+      right: 30px;
+      background: #222;
+      border-radius: 15px;
+      padding: 20px;
+      width: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      border: 2px solid var(--main-color);
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .selected-item {
+      background: #333;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .selected-item:hover {
+      background: #444;
+      transform: translateX(-5px);
+    }
+
+    .remove-btn {
+      background: #ff4757;
+      color: white;
+      border: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .remove-btn:hover {
+      background: #ff6b81;
+    }
+
+    .global-book-now-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--main-color);
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(56, 103, 214, 0.5);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      display: none;
+    }
+
+    .global-book-now-btn:hover {
+      background: #2a52c4;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(56, 103, 214, 0.7);
+    }
+
+    .notification {
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #20bf6b;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      z-index: 2000;
+      display: none;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .notification.error {
+      background: #ff4757;
+    }
+
+    /* Booking Modal */
+    .booking-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .booking-modal.active {
+      display: flex;
+    }
+
+    .booking-modal-container {
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      background: #222;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .booking-modal-header {
+      background: #333;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--main-color);
+    }
+
+    .booking-modal-header h3 {
+      color: var(--main-color);
+      font-size: 2rem;
+    }
+
+    .booking-modal-close {
+      background: var(--main-color);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .booking-modal-content {
+      padding: 2rem;
+      overflow-y: auto;
+      max-height: calc(90vh - 80px);
+    }
+
+    .booking-summary {
+      background: #333;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .booking-summary h4 {
+      color: var(--main-color);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.5rem;
+    }
+
+    .booking-summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background: #444;
+      border-radius: 5px;
+    }
+
+    .booking-total {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px solid var(--main-color);
+    }
+
+    .booking-total h4 {
+      color: #fff;
+      font-size: 1.5rem;
+    }
+
+    .booking-form {
+      background: #333;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .booking-form h4 {
+      color: var(--main-color);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+  
+    .form-group label {
+      display: block;
+      color: #ccc; 
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 5px;
+      border: 1px solid #555;
+      background: #222;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--main-color);
+    }
+
+    .booking-form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* Receipt Modal */
+    .receipt-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .receipt-modal.active {
+      display: flex;
+    }
+
+    .receipt-container {
+      width: 90%;
+      max-width: 600px;
+      background: #222;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .receipt-header {
+      background: var(--success-color);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .receipt-header h3 {
+      color: white;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .receipt-content {
+      padding: 2rem;
+    }
+
+    .receipt-success {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: rgba(32, 191, 107, 0.1);
+      border-radius: 10px;
+    }
+
+    .receipt-success i {
+      font-size: 4rem;
+      color: var(--success-color);
+      margin-bottom: 1rem;
+    }
+
+    .receipt-success h4 {
+      color: var(--success-color);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .receipt-success p {
+      color: #ccc;
+    }
+
+    .receipt-details {
+      background: #333;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .receipt-details h4 {
+      color: var(--main-color);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.5rem;
+    }
+
+    .receipt-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background: #444;
+      border-radius: 5px;
+    }
+
+    .receipt-total {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px solid var(--main-color);
+    }
+
+    .receipt-total h4 {
+      color: #fff;
+      font-size: 1.5rem;
+    }
+
+    .receipt-info {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed #555;
+    }
+
+    .receipt-info p {
+      color: #ccc;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .receipt-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="header">
+    <a href="#home" class="logo"><span>e</span>vento</a>
+    
+    <nav class="navbar">
+      <a href="#home">home</a>
+      <a href="#service">service</a>
+      <a href="#gallery">gallery</a>
+      <a href="#price">price</a>
+      <a href="#booking">booking</a>
+      
+      <!-- Fixed Admin Panel Button -->
+      <a href="/admin/login" class="admin-panel-btn">Admin Panel</a>
+      <a href="/logout" class="logout-btn">logout</a>
+    </nav>
+    
+    <div id="menu-bars" class="fas fa-bars"></div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <h1>Welcome to <span>e</span>vento</h1>
+    <div class="swiper heroSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="../static/holi.jpg" alt="Corporate Event"></div>
+        <div class="swiper-slide"><img src="../static/cor.jpg" alt="Holi Festival"></div>
+        <div class="swiper-slide"><img src="../static/wed.jpg" alt="Party Celebration"></div>
+        <div class="swiper-slide"><img src="../static/wed2.jpg" alt="Corporate Event"></div>
+        <div class="swiper-slide"><img src="../static/stage3.jpg" alt="Holi Festival"></div>
+        <div class="swiper-slide"><img src="../static/stage8.jpg" alt="Party Celebration"></div>
+        <div class="swiper-slide"><img src="../static/holi.jpg" alt="Corporate Event"></div>
+        <div class="swiper-slide"><img src="../static/cor.jpg" alt="Holi Festival"></div>
+        <div class="swiper-slide"><img src="../static/wed.jpg" alt="Party Celebration"></div>
+        <div class="swiper-slide"><img src="../static/wed2.jpg" alt="Corporate Event"></div>
+        <div class="swiper-slide"><img src="../static/stage3.jpg" alt="Holi Festival"></div>
+        <div class="swiper-slide"><img src="../static/stage8.jpg" alt="Party Celebration"></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+  
+  <!-- Services -->
+  <section class="services" id="service">
+    <h2>OUR SERVICES</h2>
+    <div class="service-items">
+      <div class="service-item" onclick="showServiceDetail('venue')" id="venue-service-item">
+        <span class="booked-badge"><i class="fas fa-check"></i> Booked</span>
+        <i class="fas fa-map-marker-alt"></i>
+        <h3>Venue Selection</h3>
+        <p>We help you find the perfect venue that matches your event theme, budget, and capacity requirements from our extensive network of premium locations.</p>
+      </div>
+      <div class="service-item" onclick="showServiceDetail('invitation')" id="invitation-service-item">
+        <span class="booked-badge"><i class="fas fa-check"></i> Booked</span>
+        <i class="fas fa-envelope"></i>
+        <h3>Invitation Card</h3>
+        <p>Custom-designed invitation cards that reflect your event's personality, with options for digital and physical delivery to your guests.</p>
+      </div>
+      <div class="service-item" onclick="showServiceDetail('entertainment')" id="entertainment-service-item">
+        <span class="booked-badge"><i class="fas fa-check"></i> Booked</span>
+        <i class="fas fa-music"></i>
+        <h3>Entertainment</h3>
+        <p>From live bands and DJs to cultural performances, we arrange entertainment that keeps your guests engaged and creates memorable moments.</p>
+      </div>
+      <div class="service-item" onclick="showServiceDetail('food')" id="food-service-item">
+        <span class="booked-badge"><i class="fas fa-check"></i> Booked</span>
+        <i class="fas fa-utensils"></i>
+        <h3>Food And Drinks</h3>
+        <p>Catering services with diverse menu options, including vegetarian, non-vegetarian, and specialty diets, served by professional staff.</p>
+      </div>
+      <div class="service-item" onclick="showServiceDetail('photos')" id="photos-service-item">
+        <span class="booked-badge"><i class="fas fa-check"></i> Booked</span>
+        <i class="fas fa-photo-video"></i>
+        <h3>Photos And Videos</h3>
+        <p>Professional photography and videography services to capture every special moment of your event with high-quality equipment and editing.</p>
+      </div>
+      <div class="service-item" onclick="showServiceDetail('custom-foods')" id="custom-foods-service-item">
+        <span class="booked-badge"><i class="fas fa-check"></i> Booked</span>
+        <i class="fas fa-hamburger"></i>
+        <h3>Custom Foods</h3>
+        <p>Specialized culinary experiences including themed food stations, live counters, and personalized menus tailored to your preferences.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Service Detail Modals -->
+  <div class="service-modal" id="venue-service-modal">
+    <div class="service-modal-container">
+      <div class="service-modal-header">
+        <h3>Venue Selection</h3>
+        <button class="service-modal-close" onclick="closeServiceModal('venue-service-modal')">&times;</button>
+      </div>
+      <div class="service-modal-content">
+        <div class="service-modal-image">
+          <img src="../static/hallent.jpg" alt="Venue Selection">
+        </div>
+        <div class="service-modal-info">
+          <h4>Find Your Perfect Event Space</h4>
+          <p>Our venue selection service helps you discover the ideal location for your event from our extensive portfolio of premium venues across Mumbai. Whether you're planning an intimate gathering or a large-scale celebration, we have the perfect space for you.</p>
+          
+          <div class="service-features">
+            <h5>What We Offer</h5>
+            <ul>
+              <li>Access to 50+ premium venues across Mumbai</li>
+              <li>Venues for all event types and sizes</li>
+              <li>Budget-friendly options available</li>
+              <li>Site visits and virtual tours</li>
+              <li>Venue comparison and recommendations</li>
+              <li>Contract negotiation and booking assistance</li>
+            </ul>
+          </div>
+          
+          <div class="service-packages">
+            <h5>Service Packages</h5>
+            <div class="package-item">
+              <span class="package-name">Basic Venue Search</span>
+              <span class="package-price">₹5,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Premium Venue Selection</span>
+              <span class="package-price">₹15,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Complete Venue Management</span>
+              <span class="package-price">₹25,000</span>
+            </div>
+          </div>
+          
+          <div class="service-modal-actions">
+            <button class="btn btn-primary" id="venue-select-btn" onclick="selectService('Venue Selection', 5000)">Select This Service</button>
+            <button class="btn btn-secondary" onclick="closeServiceModal('venue-service-modal')">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="service-modal" id="invitation-service-modal">
+    <div class="service-modal-container">
+      <div class="service-modal-header">
+        <h3>Invitation Cards</h3>
+        <button class="service-modal-close" onclick="closeServiceModal('invitation-service-modal')">&times;</button>
+      </div>
+      <div class="service-modal-content">
+        <div class="service-modal-image">
+          <img src="../static/corinv.jpg" alt="Invitation Cards">
+        </div>
+        <div class="service-modal-info">
+          <h4>Beautiful Invitations for Your Special Day</h4>
+          <p>Make a lasting first impression with our custom-designed invitation cards. Our team of designers will work with you to create invitations that perfectly reflect the theme and tone of your event.</p>
+          
+          <div class="service-features">
+            <h5>What We Offer</h5>
+            <ul>
+              <li>Custom design based on your event theme</li>
+              <li>Multiple paper quality options</li>
+              <li>Digital and physical invitation options</li>
+              <li>RSVP management system</li>
+              <li>Bulk printing discounts</li>
+              <li>Delivery and distribution service</li>
+            </ul>
+          </div>
+          
+          <div class="service-packages">
+            <h5>Service Packages</h5>
+            <div class="package-item">
+              <span class="package-name">Basic Digital Invites</span>
+              <span class="package-price">₹3,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Premium Printed Invitations</span>
+              <span class="package-price">₹8,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Luxury Invitation Suite</span>
+              <span class="package-price">₹15,000</span>
+            </div>
+          </div>
+          
+          <div class="service-modal-actions">
+            <button class="btn btn-primary" id="invitation-select-btn" onclick="selectService('Invitation Card', 3000)">Select This Service</button>
+            <button class="btn btn-secondary" onclick="closeServiceModal('invitation-service-modal')">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="service-modal" id="entertainment-service-modal">
+    <div class="service-modal-container">
+      <div class="service-modal-header">
+        <h3>Entertainment</h3>
+        <button class="service-modal-close" onclick="closeServiceModal('entertainment-service-modal')">&times;</button>
+      </div>
+      <div class="service-modal-content">
+        <div class="service-modal-image">
+          <img src="../static/music.jpg" alt="Entertainment">
+        </div>
+        <div class="service-modal-info">
+          <h4>Unforgettable Entertainment Experiences</h4>
+          <p>From live bands and DJs to cultural performances and interactive activities, we provide entertainment that will make your event truly memorable and keep your guests engaged throughout.</p>
+          
+          <div class="service-features">
+            <h5>What We Offer</h5>
+            <ul>
+              <li>Live bands and solo musicians</li>
+              <li>Professional DJs with equipment</li>
+              <li>Cultural dance performances</li>
+              <li>Interactive games and activities</li>
+              <li>Photo booths and selfie stations</li>
+              <li>Sound and lighting setup</li>
+            </ul>
+          </div>
+          
+          <div class="service-packages">
+            <h5>Service Packages</h5>
+            <div class="package-item">
+              <span class="package-name">Basic DJ Package</span>
+              <span class="package-price">₹10,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Live Band Performance</span>
+              <span class="package-price">₹25,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Complete Entertainment Package</span>
+              <span class="package-price">₹50,000</span>
+            </div>
+          </div>
+          
+          <div class="service-modal-actions">
+            <button class="btn btn-primary" id="entertainment-select-btn" onclick="selectService('Entertainment', 10000)">Select This Service</button>
+            <button class="btn btn-secondary" onclick="closeServiceModal('entertainment-service-modal')">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="service-modal" id="food-service-modal">
+    <div class="service-modal-container">
+      <div class="service-modal-header">
+        <h3>Food And Drinks</h3>
+        <button class="service-modal-close" onclick="closeServiceModal('food-service-modal')">&times;</button>
+      </div>
+      <div class="service-modal-content">
+        <div class="service-modal-image">
+          <img src="../static/food.jpg" alt="Food And Drinks">
+        </div>
+        <div class="service-modal-info">
+          <h4>Culinary Excellence for Your Event</h4>
+          <p>Delight your guests with our exceptional catering services. We offer diverse menu options prepared by experienced chefs using the freshest ingredients, with service tailored to your event's needs.</p>
+          
+          <div class="service-features">
+            <h5>What We Offer</h5>
+            <ul>
+              <li>Multi-cuisine menu options</li>
+              <li>Vegetarian and non-vegetarian dishes</li>
+              <li>Special dietary requirements accommodated</li>
+              <li>Professional serving staff</li>
+              <li>Beverage service and bar setup</li>
+              <li>Food tasting sessions available</li>
+            </ul>
+          </div>
+          
+          <div class="service-packages">
+            <h5>Service Packages</h5>
+            <div class="package-item">
+              <span class="package-name">Basic Buffet (per person)</span>
+              <span class="package-price">₹800</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Premium Buffet (per person)</span>
+              <span class="package-price">₹1,500</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Plated Dinner (per person)</span>
+              <span class="package-price">₹2,000</span>
+            </div>
+          </div>
+          
+          <div class="service-modal-actions">
+            <button class="btn btn-primary" id="food-select-btn" onclick="selectService('Food And Drinks', 15000)">Select This Service</button>
+            <button class="btn btn-secondary" onclick="closeServiceModal('food-service-modal')">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="service-modal" id="photos-service-modal">
+    <div class="service-modal-container">
+      <div class="service-modal-header">
+        <h3>Photos And Videos</h3>
+        <button class="service-modal-close" onclick="closeServiceModal('photos-service-modal')">&times;</button>
+      </div>
+      <div class="service-modal-content">
+        <div class="service-modal-image">
+          <img src="../static/wed.jpg" alt="Photos And Videos">
+        </div>
+        <div class="service-modal-info">
+          <h4>Capture Your Precious Moments</h4>
+          <p>Preserve the memories of your special day with our professional photography and videography services. Our experienced team uses state-of-the-art equipment to capture every important moment.</p>
+          
+          <div class="service-features">
+            <h5>What We Offer</h5>
+            <ul>
+              <li>Professional photographers and videographers</li>
+              <li>High-resolution images and 4K video</li>
+              <li>Creative editing and post-production</li>
+              <li>Digital albums and online galleries</li>
+              <li>Drone photography for aerial shots</li>
+              <li>Same-day highlights and teasers</li>
+            </ul>
+          </div>
+          
+          <div class="service-packages">
+            <h5>Service Packages</h5>
+            <div class="package-item">
+              <span class="package-name">Basic Photography (4 hours)</span>
+              <span class="package-price">₹15,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Photo + Video Package</span>
+              <span class="package-price">₹30,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Complete Coverage (Full Day)</span>
+              <span class="package-price">₹50,000</span>
+            </div>
+          </div>
+          
+          <div class="service-modal-actions">
+            <button class="btn btn-primary" id="photos-select-btn" onclick="selectService('Photos And Videos', 15000)">Select This Service</button>
+            <button class="btn btn-secondary" onclick="closeServiceModal('photos-service-modal')">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="service-modal" id="custom-foods-service-modal">
+    <div class="service-modal-container">
+      <div class="service-modal-header">
+        <h3>Custom Foods</h3>
+        <button class="service-modal-close" onclick="closeServiceModal('custom-foods-service-modal')">&times;</button>
+      </div>
+      <div class="service-modal-content">
+        <div class="service-modal-image">
+          <img src="../static/cus.jpg" alt="Custom Foods">
+        </div>
+        <div class="service-modal-info">
+          <h4>Personalized Culinary Experiences</h4>
+          <p>Elevate your event with our custom food services. From themed food stations to personalized menus, we create unique culinary experiences that will impress your guests and make your event unforgettable.</p>
+          
+          <div class="service-features">
+            <h5>What We Offer</h5>
+            <ul>
+              <li>Themed food stations and live counters</li>
+              <li>Signature dishes created for your event</li>
+              <li>Interactive culinary experiences</li>
+              <li>International cuisine specialists</li>
+              <li>Dietary restriction accommodations</li>
+              <li>Food presentation and styling</li>
+            </ul>
+          </div>
+          
+          <div class="service-packages">
+            <h5>Service Packages</h5>
+            <div class="package-item">
+              <span class="package-name">Two Custom Food Stations</span>
+              <span class="package-price">₹20,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Complete Custom Menu</span>
+              <span class="package-price">₹35,000</span>
+            </div>
+            <div class="package-item">
+              <span class="package-name">Luxury Culinary Experience</span>
+              <span class="package-price">₹60,000</span>
+            </div>
+          </div>
+          
+          <div class="service-modal-actions">
+            <button class="btn btn-primary" id="custom-foods-select-btn" onclick="selectService('Custom Foods', 20000)">Select This Service</button>
+            <button class="btn btn-secondary" onclick="closeServiceModal('custom-foods-service-modal')">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- About -->
+  <section class="about" id="about">
+    <h2>Our Halls</h2>
+    <div class="about-description">
+      <p>We are professional event organizers with years of experience in creating memorable events. From weddings to corporate events, we handle everything with perfection. Our team of experts ensures every detail is meticulously planned and executed to create unforgettable experiences for our clients.</p>
+      <p>With multiple premium venues across Mumbai, we offer state-of-the-art facilities and exceptional service to make your event truly special.</p>
+    </div>
+    
+    <div class="branches-section">
+      <h3>Our Hall Locations</h3>
+      <div class="branches-grid">
+        <div class="branch-card active" onclick="showHall('mumbai')" id="mumbai-hall-card">
+          <div class="branch-image">
+            <img src="../static/hall5.jpg" alt="Mumbai Hall">
+          </div>
+          <i class="fas fa-building"></i>
+          <h4>Mumbai</h4>
+          <p>Main Branch</p>
+        </div>
+        <div class="branch-card" onclick="showHall('jogeshwari')" id="jogeshwari-hall-card">
+          <div class="branch-image">
+            <img src="../static/hall.jpg" alt="Jogeshwari Hall">
+          </div>
+          <i class="fas fa-building"></i>
+          <h4>Jogeshwari</h4>
+          <p>West Mumbai</p>
+        </div>
+        <div class="branch-card" onclick="showHall('goregaon')" id="goregaon-hall-card">
+          <div class="branch-image">
+            <img src="../static/hall3.jpg" alt="Goregaon Hall">
+          </div>
+          <i class="fas fa-building"></i>
+          <h4>Goregaon</h4>
+          <p>Suburban Branch</p>
+        </div>
+        <div class="branch-card" onclick="showHall('navi-mumbai')" id="navi-mumbai-hall-card">
+          <div class="branch-image">
+            <img src="../static/hall4.jpg" alt="Navi Mumbai Hall">
+          </div>
+          <i class="fas fa-building"></i>
+          <h4>Navi Mumbai</h4>
+          <p>New Mumbai</p>
+        </div>
+        <div class="branch-card" onclick="showHall('andheri')" id="andheri-hall-card">
+          <div class="branch-image">
+            <img src="../static/hallent.jpg" alt="Andheri Hall">
+          </div>
+          <i class="fas fa-building"></i>
+          <h4>Andheri</h4>
+          <p>Commercial Hub</p>
+        </div>
+      </div>
+      
+      <!-- Hall Display Section - Initially hidden -->
+      <div class="hall-display-section" id="hall-display">
+        <div class="hall-display-content">
+          <div class="hall-image">
+            <img id="hall-image" src="../static/out.jpg" alt="Mumbai Hall">
+          </div>
+          <div class="hall-info">
+            <h4 id="hall-name">Grand Mumbai Hall</h4>
+            <p id="hall-description">Our flagship venue in Mumbai with capacity for 500+ guests, featuring state-of-the-art audio-visual equipment and premium amenities.</p>
+            
+            <div class="hall-features">
+              <div class="feature-item">
+                <i class="fas fa-users"></i>
+                <span>Capacity: 500+ Guests</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-wifi"></i>
+                <span>High-Speed WiFi</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-parking"></i>
+                <span>Ample Parking</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-utensils"></i>
+                <span>In-house Catering</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-music"></i>
+                <span>Premium Sound System</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-video"></i>
+                <span>LED Screens</span>
+              </div>
+            </div>
+            
+            <div class="hall-actions">
+              <button class="btn btn-primary" id="hall-select-btn" onclick="selectHall()">Select This Hall</button>
+              <button class="btn btn-secondary" onclick="showVirtualTour('mumbai')">Virtual Tour</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Virtual Tour Modal -->
+  <div class="virtual-tour-modal" id="virtualTourModal">
+    <div class="tour-container">
+      <div class="tour-header">
+        <h3 id="tour-title">Virtual Tour - Grand Mumbai Hall</h3>
+        <button class="tour-close" onclick="closeVirtualTour()">&times;</button>
+      </div>
+      <div class="tour-content">
+        <div class="tour-view">
+          <img id="tour-current-image" src="../static/hall5.jpg" alt="Virtual Tour View" class="tour-image">
+          <div class="tour-controls">
+            <button class="tour-nav-btn" onclick="navigateTour(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="tour-nav-btn" onclick="navigateTour(1)"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+        <div class="tour-info">
+          <h4>About This View</h4>
+          <p id="tour-description">Main entrance area with elegant decor and spacious seating arrangement.</p>
+          
+          <div class="tour-hotspots">
+            <button class="hotspot-btn active" onclick="changeTourView(0)">Entrance</button>
+            <button class="hotspot-btn" onclick="changeTourView(1)">Main Hall</button>
+            <button class="hotspot-btn" onclick="changeTourView(2)">Stage Area</button>
+            <button class="hotspot-btn" onclick="changeTourView(3)">Dining Area</button>
+            <button class="hotspot-btn" onclick="changeTourView(4)">Outdoor Space</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+   <!-- Gallery -->
+  <section class="gallery" id="gallery">
+    <h2>OUR GALLERY</h2>
+    <div class="gallery-subtitle">Events And Photos</div>
+    <div class="gallery-grid">
+      <div class="gallery-card" onclick="showImage(0)">
+        <img src="../static/wed.jpg" alt="Corporate Event">
+        <div class="gallery-overlay">
+          <div class="gallery-actions">
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); showImage(0)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); shareImage(0)">
+              <i class="fas fa-share-alt"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); likeImage(0)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="gallery-card" onclick="showImage(1)">
+        <img src="../static/wed2.jpg" alt="Birthday Celebration">
+        <div class="gallery-overlay">
+          <div class="gallery-actions">
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); showImage(1)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); shareImage(1)">
+              <i class="fas fa-share-alt"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); likeImage(1)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="gallery-card" onclick="showImage(2)">
+        <img src="../static/cel.jpg" alt="Wedding Ceremony">
+        <div class="gallery-overlay">
+          <div class="gallery-actions">
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); showImage(2)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); shareImage(2)">
+              <i class="fas fa-share-alt"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); likeImage(2)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="gallery-card" onclick="showImage(3)">
+        <img src="../static/birth.jpg" alt="Holi Festival">
+        <div class="gallery-overlay">
+          <div class="gallery-actions">
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); showImage(3)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); shareImage(3)">
+              <i class="fas fa-share-alt"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); likeImage(3)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional 2 cards for 6 total -->
+      <div class="gallery-card" onclick="showImage(4)">
+        <img src="../static/cor.jpg" alt="Corporate Gathering">
+        <div class="gallery-overlay">
+          <div class="gallery-actions">
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); showImage(4)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); shareImage(4)">
+              <i class="fas fa-share-alt"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); likeImage(4)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="gallery-card" onclick="showImage(5)">
+        <img src="../static/cel4.jpg" alt="Color Festival">
+        <div class="gallery-overlay">
+          <div class="gallery-actions">
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); showImage(5)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); shareImage(5)">
+              <i class="fas fa-share-alt"></i>
+            </button>
+            <button class="gallery-action-btn" onclick="event.stopPropagation(); likeImage(5)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <div class="lightbox-nav">
+      <button onclick="navigateImage(-1)"><i class="fas fa-chevron-left"></i></button>
+      <button onclick="navigateImage(1)"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+  
+  <!-- Pricing -->
+  <section class="price-section" id="price">
+    <h2>OUR PRICE</h2>
+    <div class="pricing-table">
+      <div class="price-card" id="birthday-package-card">
+        <h3>For Birthdays</h3>
+        <div class="price">₹20,999</div>
+        <ul>
+          <li>Full Services</li>
+          <li>Decorations</li>
+          <li>Music And Photos</li>
+          <li>Food And Drinks</li>
+          <li>Invitation Card</li>
+        </ul>
+        <button id="birthday-package-btn" onclick="selectPackage('birthday', 20999)">Book Now</button>
+      </div>
+      <div class="price-card" id="wedding-package-card">
+        <h3>For Wedding</h3>
+        <div class="price">₹40,999</div>
+        <ul>
+          <li>Full Services</li>
+          <li>Decorations</li>
+          <li>Music And Photos</li>
+          <li>Food And Drinks</li>
+          <li>Invitation Card</li>
+        </ul>
+        <button id="wedding-package-btn" onclick="selectPackage('wedding', 40999)">Book Now</button>
+      </div>
+      <div class="price-card" id="concert-package-card">
+        <h3>For Concerts</h3>
+        <div class="price">₹60,999</div>
+        <ul>
+          <li>Full Services</li>
+          <li>Decorations</li>
+          <li>Music And Photos</li>
+          <li>Food And Drinks</li>
+          <li>Invitation Card</li>
+        </ul>
+        <button id="concert-package-btn" onclick="selectPackage('concert', 60999)">Book Now</button>
+      </div>
+      <div class="price-card" id="other-package-card">
+        <h3>For Others</h3>
+        <div class="price">₹75,999</div>
+        <ul>
+          <li>Full Services</li>
+          <li>Decorations</li>
+          <li>Music And Photos</li>
+          <li>Food And Drinks</li>
+          <li>Invitation Card</li>
+        </ul>
+        <button id="other-package-btn" onclick="selectPackage('other', 75999)">Book Now</button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>Evento is a professional event management company that specializes in creating unforgettable experiences for all types of events.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#home">home</a></li>
+          <li><a href="#service">service</a></li>
+          <li><a href="#gallery">gallery</a></li>
+          <li><a href="#price">price</a></li>
+          <li><a href="#booking" onclick="showBookingModal(); return false;">booking</a></li>
+          
+          <!-- Fixed: Admin Panel Link in Footer -->
+          <li><a href="/admin/login" class="admin-footer-link">
+            <i class="fas fa-user-cog"></i> Admin Panel
+          </a></li>
+          
+          <li><a href="/logout">logout</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <ul>
+          <li><i class="fas fa-map-marker-alt"></i> Mumbai, India</li>
+          <li><i class="fas fa-phone"></i> +123-456-7890</li>
+          <li><i class="fas fa-envelope"></i> info@evento.com</li>
+        </ul>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Created By Evento Team | All Rights Reserved</p>
+    </div>
+  </footer>
+
+  <!-- Selected Items Panel -->
+  <div id="selected-items-panel" class="selected-items-panel"></div>
+
+  <!-- Book Now Button -->
+  <button id="global-book-now-btn" class="global-book-now-btn">
+    <i class="fas fa-calendar-check"></i> Book Now
+  </button>
+
+  <!-- Notification -->
+  <div id="notification" class="notification"></div>
+
+  <!-- Booking Modal -->
+  <div class="booking-modal" id="bookingModal">
+    <div class="booking-modal-container">
+      <div class="booking-modal-header">
+        <h3>Complete Your Booking</h3>
+        <button class="booking-modal-close" onclick="closeBookingModal()">&times;</button>
+      </div>
+      
+      <div class="booking-modal-content">
+        <div class="booking-summary">
+          <h4>Booking Summary</h4>
+          <div style="background: #444; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            <strong>Booking ID:</strong> <span id="booking-id-display">EVT-</span>
+          </div>
+          <div id="booking-summary-items"></div>
+          <div class="booking-total">
+            <h4>Total Amount: ₹<span id="booking-total">0</span></h4>
+          </div>
+        </div>
+        
+        <form id="booking-form" class="booking-form">
+          <h4>Your Details</h4>
+          
+          <div class="form-group">
+            <label for="full-name">Full Name *</label>
+            <input type="text" id="full-name" name="full-name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="event-date">Event Date *</label>
+            <input type="date" id="event-date" name="event-date" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="event-type">Event Type</label>
+            <select id="event-type" name="event-type">
+              <option value="wedding">Wedding</option>
+              <option value="birthday">Birthday</option>
+              <option value="corporate">Corporate Event</option>
+              <option value="concert">Concert</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="guests">Number of Guests</label>
+            <input type="number" id="guests" name="guests" min="1" value="50">
+          </div>
+          
+          <div class="form-group">
+            <label for="special-requests">Special Requests</label>
+            <textarea id="special-requests" name="special-requests" rows="3"></textarea>
+          </div>
+          
+          <div class="booking-form-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeBookingModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Confirm Booking</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt Modal -->
+  <div class="receipt-modal" id="receiptModal">
+    <div class="receipt-container">
+      <div class="receipt-header">
+        <h3><i class="fas fa-check-circle"></i> Booking Confirmed!</h3>
+      </div>
+      
+      <div class="receipt-content">
+        <div class="receipt-success">
+          <i class="fas fa-check-circle"></i>
+          <h4>Thank You for Your Booking!</h4>
+          <p>Your booking has been confirmed.</p>
+        </div>
+        
+        <div class="receipt-details">
+          <h4>Booking Details</h4>
+          <div id="receipt-items"></div>
+          <div class="receipt-total">
+            <h4>Total Amount: ₹<span id="receipt-total">0</span></h4>
+          </div>
+          
+          <div class="receipt-info">
+            <p><strong>Booking ID:</strong> <span id="booking-id">Loading...</span></p>
+            <p><strong>Booking Date:</strong> <span id="booking-date">Loading...</span></p>
+          </div>
+        </div>
+        
+        <div class="receipt-actions">
+          <button class="btn btn-primary" onclick="printReceipt()"><i class="fas fa-print"></i> Print Receipt</button>
+          <button class="btn btn-secondary" onclick="closeReceiptModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    // Global variables
+    let selectedItems = {
+      service: null,
+      hall: null,
+      package: null
+    };
+
+    let currentHall = 'mumbai';
+    
+    // Halls data
+    const halls = {
+      'mumbai': {
+        image: '../static/hall5.jpg',
+        name: 'Grand Mumbai Hall',
+        description: 'Our flagship venue in Mumbai with capacity for 500+ guests, featuring state-of-the-art audio-visual equipment and premium amenities.',
+        features: [
+          'Capacity: 500+ Guests',
+          'High-Speed WiFi',
+          'Ample Parking',
+          'In-house Catering',
+          'Premium Sound System',
+          'LED Screens'
+        ],
+        price: 25000
+      },
+      'jogeshwari': {
+        image: '../static/hall.jpg',
+        name: 'Jogeshwari Event Center',
+        description: 'Modern event space in West Mumbai with flexible layouts, perfect for corporate events and social gatherings up to 300 guests.',
+        features: [
+          'Capacity: 300 Guests',
+          'Flexible Layouts',
+          'VIP Lounge',
+          'Professional Lighting',
+          'HD Projectors',
+          'Green Rooms'
+        ],
+        price: 18000
+      },
+      'goregaon': {
+        image: '../static/hall3.jpg',
+        name: 'Goregaon Banquet Hall',
+        description: 'Elegant suburban venue with beautiful interiors and outdoor garden area, ideal for weddings and celebrations.',
+        features: [
+          'Capacity: 400 Guests',
+          'Garden Area',
+          'Bridal Suite',
+          'Dance Floor',
+          'Custom Decor',
+          'Valet Parking'
+        ],
+        price: 22000
+      },
+      'navi-mumbai': {
+        image: '../static/hall4.jpg',
+        name: 'Navi Mumbai Convention Center',
+        description: 'Spacious modern facility in New Mumbai with multiple event halls and advanced technical capabilities.',
+        features: [
+          'Capacity: 600+ Guests',
+          'Multiple Halls',
+          'Business Center',
+          'Video Conferencing',
+          'Exhibition Space',
+          'Catering Kitchen'
+        ],
+        price: 30000
+      },
+      'andheri': {
+        image: '../static/hallent.jpg',
+        name: 'Andheri Business Hub',
+        description: 'Premium commercial venue in the heart of Andheri, perfect for corporate meetings, product launches, and conferences.',
+        features: [
+          'Capacity: 250 Guests',
+          'Boardroom Setup',
+          'High-Speed Internet',
+          'Audio Recording',
+          'Presentation Tools',
+          'Catering Services'
+        ],
+        price: 20000
+      }
+    };
+
+    // Package prices
+    const packagePrices = {
+      'birthday': 20999,
+      'wedding': 40999,
+      'concert': 60999,
+      'other': 75999
+    };
+
+    // Package names
+    const packageNames = {
+      'birthday': 'For Birthdays',
+      'wedding': 'For Wedding', 
+      'concert': 'For Concerts',
+      'other': 'For Others'
+    };
+
+    // Virtual Tours for all halls - FIXED WITH CORRECT IMAGE PATHS
+    const virtualTours = {
+      'mumbai': {
+        title: 'Virtual Tour - Grand Mumbai Hall',
+        views: [
+          {
+            image: '../static/hall5.jpg',
+            description: 'Main entrance area with elegant decor and spacious seating arrangement.'
+          },
+          {
+            image: '../static/hall.jpg',
+            description: 'Main hall area with premium lighting and sound system setup.'
+          },
+          {
+            image: '../static/stage.jpg',
+            description: 'Stage area perfect for performances and presentations.'
+          },
+          {
+            image: '../static/diner.jpg',
+            description: 'Dining area with comfortable seating and elegant table settings.'
+          },
+          {
+            image: '../static/out.jpg',
+            description: 'Outdoor space for pre-function gatherings and cocktail hours.'
+          }
+        ]
+      },
+      'jogeshwari': {
+        title: 'Virtual Tour - Jogeshwari Event Center',
+        views: [
+          {
+            image: '../static/hall.jpg',
+            description: 'Modern entrance with contemporary design.'
+          },
+          {
+            image: '../static/stage3.jpg',
+            description: 'Main event space with flexible seating arrangements.'
+          },
+          {
+            image: '../static/stage1.jpg',
+            description: 'Stage area with professional lighting setup.'
+          },
+          {
+            image: '../static/dining1.jpg',
+            description: 'Catering and food service area.'
+          },
+          {
+            image: '../static/out2.jpg',
+            description: 'Outdoor terrace with city views.'
+          }
+        ]
+      },
+      'goregaon': {
+        title: 'Virtual Tour - Goregaon Banquet Hall',
+        views: [
+          {
+            image: '../static/hall3.jpg',
+            description: 'Elegant entrance with traditional decor.'
+          },
+          {
+            image: '../static/hall3.jpg', // You can replace this with goregaon_main_hall.jpg
+            description: 'Main hall with beautiful interiors and garden view.'
+          },
+          {
+            image: '../static/stage.jpg', // You can replace this with goregaon_stage.jpg
+            description: 'Spacious stage area for ceremonies and performances.'
+          },
+          {
+            image: '../static/diner.jpg', // You can replace this with dining2.jpg
+            description: 'Dining area with elegant table settings and ambient lighting.'
+          },
+          {
+            image: '../static/out.jpg', // You can replace this with out3.jpg
+            description: 'Lush outdoor garden area for gatherings.'
+          }
+        ]
+      },
+      'navi-mumbai': {
+        title: 'Virtual Tour - Navi Mumbai Convention Center',
+        views: [
+          {
+            image: '../static/hall4.jpg',
+            description: 'Grand entrance with modern architecture.'
+          },
+          {
+            image: '../static/hall4.jpg', // You can replace this with navi_main_hall.jpg
+            description: 'Main convention hall with advanced facilities.'
+          },
+          {
+            image: '../static/stage.jpg', // You can replace this with navi_stage.jpg
+            description: 'Stage area equipped with latest technology.'
+          },
+          {
+            image: '../static/diner.jpg', // You can replace this with dining3.jpg
+            description: 'Dining area with multiple food stations.'
+          },
+          {
+            image: '../static/out.jpg', // You can replace this with out4.jpg
+            description: 'Outdoor space for networking and breaks.'
+          }
+        ]
+      },
+      'andheri': {
+        title: 'Virtual Tour - Andheri Business Hub',
+        views: [
+          {
+            image: '../static/hallent.jpg',
+            description: 'Professional entrance with corporate setting.'
+          },
+          {
+            image: '../static/hallent.jpg', // You can replace this with andheri_main_hall.jpg
+            description: 'Main hall suitable for conferences and meetings.'
+          },
+          {
+            image: '../static/stage.jpg', // You can replace this with andheri_stage.jpg
+            description: 'Stage area with presentation tools.'
+          },
+          {
+            image: '../static/diner.jpg', // You can replace this with dining4.jpg
+            description: 'Dining area for business lunches and dinners.'
+          },
+          {
+            image: '../static/out.jpg', // You can replace this with out5.jpg
+            description: 'Outdoor space for informal meetings.'
+          }
+        ]
+      }
+    };
+
+    // Gallery images
+    const galleryImages = [
+      { src: "../static/wed.jpg", caption: "Wedding Celebration" },
+      { src: "../static/wed2.jpg", caption: "Birthday Party" },
+      { src: "../static/cel.jpg", caption: "Wedding Ceremony" },
+      { src: "../static/birth.jpg", caption: "Holi Festival" },
+      { src: "../static/cor.jpg", caption: "Corporate Gathering" },
+      { src: "../static/cel4.jpg", caption: "Color Festival" }
+    ];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Swiper WITHOUT navigation arrows
+      new Swiper(".heroSwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 3,
+        loop: true,
+        autoplay: { delay: 1000, disableOnInteraction: false },
+        coverflowEffect: {
+          rotate: 0,
+          stretch: 0,
+          depth: 100,
+          modifier: 2,
+          slideShadows: true,
+        },
+        pagination: { el: ".heroSwiper .swiper-pagination", clickable: true },
+      });
+
+      // Show Mumbai hall by default
+      showHall('mumbai');
+
+      // Set up book now button
+      document.getElementById('global-book-now-btn').onclick = showBookingModal;
+
+      // Update selected items display
+      updateSelectedItemsDisplay();
+      
+      // Check login status and populate form if logged in
+      checkLoginStatus();
+    });
+
+    // Function to check login status on page load
+    async function checkLoginStatus() {
+      try {
+        const response = await fetch('/check_login');
+        const result = await response.json();
+        
+        if (!result.logged_in) {
+          // User is not logged in, hide booking buttons
+          document.getElementById('global-book-now-btn').style.display = 'none';
+          document.querySelectorAll('.btn-primary').forEach(btn => {
+            if (btn.textContent.includes('Select') || btn.textContent.includes('Book')) {
+              btn.disabled = true;
+              btn.innerHTML = '<i class="fas fa-lock"></i> Login to Book';
+            }
+          });
+        } else {
+          // User is logged in, populate form with user info
+          document.getElementById('full-name').value = result.user_name || '';
+          document.getElementById('email').value = result.user_email || '';
+          
+          // Try to get user phone from API if available
+          try {
+            const userInfo = await fetch('/get_user_info');
+            const userData = await userInfo.json();
+            if (userData.phone) {
+              document.getElementById('phone').value = userData.phone;
+            }
+          } catch (e) {
+            console.log('Could not get user phone info');
+          }
+        }
+      } catch (error) {
+        console.error('Login check error:', error);
+      }
+    }
+
+    // Navbar Toggle
+    const menu = document.querySelector('#menu-bars');
+    const navbar = document.querySelector('.navbar');
+    menu.onclick = () => {
+      menu.classList.toggle('fa-times');
+      navbar.classList.toggle('active');
+    };
+    window.onscroll = () => {
+      menu.classList.remove('fa-times');
+      navbar.classList.remove('active');
+    };
+
+    // Service functions
+    function showServiceDetail(serviceType) {
+      const modalId = `${serviceType}-service-modal`;
+      document.getElementById(modalId).classList.add('active');
+    }
+
+    function closeServiceModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    function selectService(serviceName, price) {
+      if (selectedItems.service) {
+        showNotification('You have already selected a service! Remove it first.', 'error');
+        return;
+      }
+      
+      selectedItems.service = {
+        name: serviceName,
+        price: price
+      };
+      
+      // Update UI
+      markServiceAsBooked(serviceName);
+      
+      // Close the modal
+      const modalId = serviceName.toLowerCase().replace(/ /g, '-') + '-service-modal';
+      closeServiceModal(modalId);
+      
+      // Update display
+      updateSelectedItemsDisplay();
+      showBookNowButton();
+      showNotification(`${serviceName} selected!`);
+    }
+
+    function markServiceAsBooked(serviceName) {
+      const serviceId = serviceName.toLowerCase().replace(/ /g, '-') + '-service-item';
+      const serviceElement = document.getElementById(serviceId);
+      
+      if (serviceElement) {
+        serviceElement.classList.add('booked');
+        serviceElement.onclick = null;
+        
+        // Update button in modal
+        const btnId = serviceName.toLowerCase().replace(/ /g, '-') + '-select-btn';
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          btn.innerHTML = '<i class="fas fa-check"></i> Booked';
+          btn.classList.add('booked');
+          btn.onclick = null;
+        }
+      }
+    }
+
+    // Hall functions
+    function showHall(branch) {
+      currentHall = branch;
+      
+      // Update active branch card
+      document.querySelectorAll('.branch-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      
+      const hallCardId = branch + '-hall-card';
+      document.getElementById(hallCardId).classList.add('active');
+      
+      // Show hall display section
+      const hallDisplay = document.getElementById('hall-display');
+      hallDisplay.classList.add('active');
+      
+      // Update hall display
+      const hall = halls[branch];
+      document.getElementById('hall-image').src = hall.image;
+      document.getElementById('hall-name').textContent = hall.name;
+      document.getElementById('hall-description').textContent = hall.description;
+      
+      // Update features
+      const featuresContainer = document.querySelector('.hall-features');
+      featuresContainer.innerHTML = '';
+      
+      hall.features.forEach(feature => {
+        const featureItem = document.createElement('div');
+        featureItem.className = 'feature-item';
+        featureItem.innerHTML = `
+          <i class="fas fa-check-circle"></i>
+          <span>${feature}</span>
+        `;
+        featuresContainer.appendChild(featureItem);
+      });
+    }
+
+    function selectHall() {
+      if (selectedItems.hall) {
+        showNotification('You have already selected a hall! Remove it first.', 'error');
+        return;
+      }
+      
+      const hallName = document.getElementById('hall-name').textContent;
+      const hallPrice = halls[currentHall].price;
+      
+      selectedItems.hall = {
+        name: hallName,
+        price: hallPrice
+      };
+      
+      // Mark hall as booked
+      markHallAsBooked(currentHall);
+      
+      updateSelectedItemsDisplay();
+      showBookNowButton();
+      showNotification(`${hallName} selected!`);
+    }
+
+    function markHallAsBooked(hallId) {
+      const hallCardId = hallId + '-hall-card';
+      const hallCard = document.getElementById(hallCardId);
+      
+      if (hallCard) {
+        hallCard.classList.add('booked');
+        hallCard.onclick = null;
+        
+        // Update hall select button
+        const hallBtn = document.getElementById('hall-select-btn');
+        if (hallBtn) {
+          hallBtn.innerHTML = '<i class="fas fa-check"></i> Hall Booked';
+          hallBtn.classList.add('booked');
+          hallBtn.onclick = null;
+        }
+      }
+    }
+
+    // Package functions
+    function selectPackage(packageType, price) {
+      if (selectedItems.package) {
+        showNotification('You have already selected a package! Remove it first.', 'error');
+        return;
+      }
+      
+      selectedItems.package = {
+        name: packageNames[packageType],
+        price: price,
+        type: packageType
+      };
+      
+      // Mark package as booked
+      markPackageAsBooked(packageType);
+      
+      updateSelectedItemsDisplay();
+      showBookNowButton();
+      showNotification(`${packageNames[packageType]} selected!`);
+    }
+
+    function markPackageAsBooked(packageType) {
+      const packageCardId = packageType + '-package-card';
+      const packageCard = document.getElementById(packageCardId);
+      
+      if (packageCard) {
+        packageCard.classList.add('booked');
+        
+        // Update package button
+        const packageBtnId = packageType + '-package-btn';
+        const packageBtn = document.getElementById(packageBtnId);
+        if (packageBtn) {
+          packageBtn.innerHTML = '<i class="fas fa-check"></i> Booked';
+          packageBtn.classList.add('booked');
+          packageBtn.onclick = null;
+        }
+      }
+    }
+
+    // Selected items management
+    function updateSelectedItemsDisplay() {
+      const panel = document.getElementById('selected-items-panel');
+      let panelContent = '<h3 style="color: var(--main-color); margin-bottom: 15px; border-bottom: 2px solid var(--main-color); padding-bottom: 10px;">Selected Items</h3>';
+      
+      let total = 0;
+      
+      // Add service if selected
+      if (selectedItems.service) {
+        panelContent += `
+          <div class="selected-item">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+              <span style="font-weight: bold; color: #fff;">${selectedItems.service.name}</span>
+              <button class="remove-btn" onclick="removeItem('service')">×</button>
+            </div>
+            <span style="color: #ccc; font-size: 0.9rem;">Service - ₹${selectedItems.service.price}</span>
+          </div>
+        `;
+        total += selectedItems.service.price;
+      }
+      
+      // Add hall if selected
+      if (selectedItems.hall) {
+        panelContent += `
+          <div class="selected-item">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+              <span style="font-weight: bold; color: #fff;">${selectedItems.hall.name}</span>
+              <button class="remove-btn" onclick="removeItem('hall')">×</button>
+            </div>
+            <span style="color: #ccc; font-size: 0.9rem;">Hall - ₹${selectedItems.hall.price}</span>
+          </div>
+        `;
+        total += selectedItems.hall.price;
+      }
+      
+      // Add package if selected
+      if (selectedItems.package) {
+        panelContent += `
+          <div class="selected-item">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+              <span style="font-weight: bold; color: #fff;">${selectedItems.package.name}</span>
+              <button class="remove-btn" onclick="removeItem('package')">×</button>
+            </div>
+            <span style="color: #ccc; font-size: 0.9rem;">Package - ₹${selectedItems.package.price}</span>
+          </div>
+        `;
+        total += selectedItems.package.price;
+      }
+      
+      // Add total
+      if (selectedItems.service || selectedItems.hall || selectedItems.package) {
+        const gst = total * 0.18;
+        const grandTotal = total + gst;
+        
+        panelContent += `
+          <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #444;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+              <span style="color: #ccc;">Subtotal:</span>
+              <span style="color: #fff;">₹${total}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+              <span style="color: #ccc;">GST (18%):</span>
+              <span style="color: #fff;">₹${gst.toFixed(2)}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--main-color);">
+              <span style="color: var(--main-color); font-weight: bold;">Total:</span>
+              <span style="color: var(--main-color); font-weight: bold;">₹${grandTotal.toFixed(2)}</span>
+            </div>
+          </div>
+        `;
+      }
+      
+      // Show message if no items selected
+      if (!selectedItems.service && !selectedItems.hall && !selectedItems.package) {
+        panelContent += '<p style="color: #ccc; text-align: center; padding: 20px;">No items selected yet</p>';
+        panel.style.display = 'none';
+      } else {
+        panel.style.display = 'block';
+        panel.innerHTML = panelContent;
+      }
+    }
+
+    function removeItem(itemType) {
+      const item = selectedItems[itemType];
+      selectedItems[itemType] = null;
+      
+      // Reset UI for the removed item
+      resetBookedStatus(itemType, item);
+      
+      updateSelectedItemsDisplay();
+      
+      // Hide book now button if no items selected
+      if (!selectedItems.service && !selectedItems.hall && !selectedItems.package) {
+        document.getElementById('global-book-now-btn').style.display = 'none';
+      }
+      
+      showNotification('Item removed');
+    }
+
+    function resetBookedStatus(itemType, item) {
+      if (!item) return;
+      
+      switch(itemType) {
+        case 'service':
+          const serviceId = item.name.toLowerCase().replace(/ /g, '-') + '-service-item';
+          const serviceElement = document.getElementById(serviceId);
+          if (serviceElement) {
+            serviceElement.classList.remove('booked');
+            serviceElement.onclick = () => showServiceDetail(item.name.toLowerCase().split(' ')[0]);
+          }
+          
+          // Reset button in modal
+          const btnId = item.name.toLowerCase().replace(/ /g, '-') + '-select-btn';
+          const btn = document.getElementById(btnId);
+          if (btn) {
+            btn.innerHTML = 'Select This Service';
+            btn.classList.remove('booked');
+            btn.onclick = () => selectService(item.name, item.price);
+          }
+          break;
+          
+        case 'hall':
+          // Find which hall was selected
+          let hallId = '';
+          for (const [key, hall] of Object.entries(halls)) {
+            if (hall.name === item.name) {
+              hallId = key;
+              break;
+            }
+          }
+          
+          if (hallId) {
+            const hallCardId = hallId + '-hall-card';
+            const hallCard = document.getElementById(hallCardId);
+            if (hallCard) {
+              hallCard.classList.remove('booked');
+              hallCard.onclick = () => showHall(hallId);
+            }
+            
+            // Reset hall select button
+            const hallBtn = document.getElementById('hall-select-btn');
+            if (hallBtn) {
+              hallBtn.innerHTML = 'Select This Hall';
+              hallBtn.classList.remove('booked');
+              hallBtn.onclick = selectHall;
+            }
+          }
+          break;
+          
+        case 'package':
+          // Find which package was selected
+          const reversePackageMap = {
+            'For Birthdays': 'birthday',
+            'For Wedding': 'wedding',
+            'For Concerts': 'concert',
+            'For Others': 'other'
+          };
+          
+          let packageType = reversePackageMap[item.name];
+          
+          if (packageType) {
+            const packageCardId = packageType + '-package-card';
+            const packageCard = document.getElementById(packageCardId);
+            if (packageCard) {
+              packageCard.classList.remove('booked');
+            }
+            
+            // Reset package button
+            const packageBtnId = packageType + '-package-btn';
+            const packageBtn = document.getElementById(packageBtnId);
+            if (packageBtn) {
+              packageBtn.innerHTML = 'Book Now';
+              packageBtn.classList.remove('booked');
+              packageBtn.onclick = () => selectPackage(packageType, item.price);
+            }
+          }
+          break;
+      }
+    }
+
+    function showBookNowButton() {
+      const bookNowBtn = document.getElementById('global-book-now-btn');
+      if (selectedItems.service || selectedItems.hall || selectedItems.package) {
+        bookNowBtn.style.display = 'flex';
+      } else {
+        bookNowBtn.style.display = 'none';
+      }
+    }
+
+    // Booking Modal Functions
+    function showBookingModal() {
+      // Check if user is logged in
+      if (!isUserLoggedIn()) {
+        showNotification('Please login first!', 'error');
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1500);
+        return;
+      }
+      
+      // Check if at least one item is selected
+      if (!selectedItems.service && !selectedItems.hall && !selectedItems.package) {
+        showNotification('Please select at least one item before booking!', 'error');
+        return;
+      }
+      
+      // Update booking summary
+      updateBookingSummary();
+      
+      // Generate booking ID
+      document.getElementById('booking-id-display').textContent = 'EVT-' + Date.now();
+      
+      // Set minimum date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('event-date').min = today;
+      
+      // Show modal
+      document.getElementById('bookingModal').classList.add('active');
+    }
+
+    function isUserLoggedIn() {
+      return document.cookie.includes('session=') || 
+             (document.getElementById('email') && document.getElementById('email').value);
+    }
+
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.remove('active');
+    }
+
+    function updateBookingSummary() {
+      const summaryContainer = document.getElementById('booking-summary-items');
+      let total = 0;
+      
+      summaryContainer.innerHTML = '';
+      
+      if (selectedItems.service) {
+        const item = document.createElement('div');
+        item.className = 'booking-summary-item';
+        item.innerHTML = `
+          <span>${selectedItems.service.name}</span>
+          <span>₹${selectedItems.service.price}</span>
+        `;
+        summaryContainer.appendChild(item);
+        total += selectedItems.service.price;
+      }
+      
+      if (selectedItems.hall) {
+        const item = document.createElement('div');
+        item.className = 'booking-summary-item';
+        item.innerHTML = `
+          <span>${selectedItems.hall.name}</span>
+          <span>₹${selectedItems.hall.price}</span>
+        `;
+        summaryContainer.appendChild(item);
+        total += selectedItems.hall.price;
+      }
+      
+      if (selectedItems.package) {
+        const item = document.createElement('div');
+        item.className = 'booking-summary-item';
+        item.innerHTML = `
+          <span>${selectedItems.package.name}</span>
+          <span>₹${selectedItems.package.price}</span>
+        `;
+        summaryContainer.appendChild(item);
+        total += selectedItems.package.price;
+      }
+      
+      // Update total
+      const gst = total * 0.18;
+      const grandTotal = total + gst;
+      
+      document.getElementById('booking-total').textContent = grandTotal.toFixed(2);
+    }
+
+    // Handle form submission
+    document.getElementById('booking-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Check if at least one item is selected
+      if (!selectedItems.service && !selectedItems.hall && !selectedItems.package) {
+        showNotification('Please select at least one item before booking!', 'error');
+        return;
+      }
+      
+      // Get form data
+      const formData = {
+        full_name: document.getElementById('full-name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        event_date: document.getElementById('event-date').value,
+        event_type: document.getElementById('event-type').value,
+        guests: document.getElementById('guests').value,
+        special_requests: document.getElementById('special-requests').value,
+        booking_id: 'EVT-' + Date.now()
+      };
+      
+      // Validate form
+      if (!formData.event_date) {
+        showNotification('Please select an event date!', 'error');
+        return;
+      }
+      
+      if (!formData.full_name || !formData.email || !formData.phone) {
+        showNotification('Please fill all required fields!', 'error');
+        return;
+      }
+      
+      // Check event date is not in past
+      const selectedDate = new Date(formData.event_date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      if (selectedDate < today) {
+        showNotification('Event date cannot be in the past!', 'error');
+        return;
+      }
+      
+      // Close booking modal
+      closeBookingModal();
+      
+      // Show receipt with actual backend call
+      showReceipt(formData);
+    });
+
+    // Receipt functions
+    async function showReceipt(bookingData) {
+      // Show loading
+      showNotification('Processing your booking...');
+      
+      try {
+        // Check if user is logged in
+        const loginCheck = await fetch('/check_login');
+        const loginResult = await loginCheck.json();
+        
+        if (!loginResult.logged_in) {
+          showNotification('Please login first!', 'error');
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 1500);
+          return;
+        }
+        
+        // Prepare booking data for backend
+        const fullName = bookingData.full_name.trim();
+        const nameParts = fullName.split(' ');
+        const firstName = nameParts[0];
+        const lastName = nameParts.slice(1).join(' ') || '';
+        
+        // Calculate total
+        let total = 0;
+        if (selectedItems.service) total += selectedItems.service.price;
+        if (selectedItems.hall) total += selectedItems.hall.price;
+        if (selectedItems.package) total += selectedItems.package.price;
+        
+        const bookingRequest = {
+          first_name: firstName,
+          last_name: lastName,
+          email: bookingData.email,
+          phone: bookingData.phone,
+          event_date: bookingData.event_date,
+          event_type: bookingData.event_type,
+          guests: parseInt(bookingData.guests) || 50,
+          special_requests: bookingData.special_requests || '',
+          
+          // Selected items
+          service_name: selectedItems.service ? selectedItems.service.name : '',
+          service_price: selectedItems.service ? selectedItems.service.price : 0,
+          hall_name: selectedItems.hall ? selectedItems.hall.name : '',
+          hall_price: selectedItems.hall ? selectedItems.hall.price : 0,
+          package_name: selectedItems.package ? selectedItems.package.name : '',
+          package_price: selectedItems.package ? selectedItems.package.price : 0,
+          total_amount: total
+        };
+        
+        console.log('Sending booking request:', bookingRequest);
+        
+        // Send booking request to backend
+        const response = await fetch('/create_booking', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(bookingRequest)
+        });
+        
+        const result = await response.json();
+        console.log('Backend response:', result);
+        
+        if (result.success) {
+          // Update receipt details with backend response
+          const receiptItems = document.getElementById('receipt-items');
+          receiptItems.innerHTML = '';
+          
+          if (selectedItems.service) {
+            const item = document.createElement('div');
+            item.className = 'receipt-item';
+            item.innerHTML = `
+              <span>${selectedItems.service.name}</span>
+              <span>₹${selectedItems.service.price}</span>
+            `;
+            receiptItems.appendChild(item);
+          }
+          
+          if (selectedItems.hall) {
+            const item = document.createElement('div');
+            item.className = 'receipt-item';
+            item.innerHTML = `
+              <span>${selectedItems.hall.name}</span>
+              <span>₹${selectedItems.hall.price}</span>
+            `;
+            receiptItems.appendChild(item);
+          }
+          
+          if (selectedItems.package) {
+            const item = document.createElement('div');
+            item.className = 'receipt-item';
+            item.innerHTML = `
+              <span>${selectedItems.package.name}</span>
+              <span>₹${selectedItems.package.price}</span>
+            `;
+            receiptItems.appendChild(item);
+          }
+          
+          // Update receipt total
+          const gst = total * 0.18;
+          const grandTotal = total + gst;
+          
+          document.getElementById('receipt-total').textContent = grandTotal.toFixed(2);
+          
+          // Update booking info with actual booking ID from backend
+          document.getElementById('booking-id').textContent = result.booking_id;
+          document.getElementById('booking-date').textContent = new Date().toLocaleDateString('en-IN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          
+          // Show receipt modal
+          document.getElementById('receiptModal').classList.add('active');
+          
+          // Show success message
+          showNotification('Booking confirmed successfully!');
+          
+          // Reset selected items
+          selectedItems = { service: null, hall: null, package: null };
+          updateSelectedItemsDisplay();
+          showBookNowButton();
+          
+        } else {
+          showNotification(result.message || 'Booking failed!', 'error');
+        }
+        
+      } catch (error) {
+        console.error('Booking error:', error);
+        showNotification('Booking failed. Please try again.', 'error');
+      }
+    }
+
+    function closeReceiptModal() {
+      document.getElementById('receiptModal').classList.remove('active');
+      document.getElementById('booking-form').reset();
+    }
+
+    function printReceipt() {
+      const printContent = `
+        <html>
+        <head>
+            <title>Booking Receipt - Evento</title>
+            <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                .header { text-align: center; margin-bottom: 30px; }
+                .header h2 { color: #3867d6; }
+                .details { margin: 20px 0; }
+                .item { display: flex; justify-content: space-between; margin: 5px 0; padding: 5px; background: #f5f5f5; }
+                .total { font-weight: bold; font-size: 18px; margin-top: 20px; padding-top: 10px; border-top: 2px solid #000; }
+                .info { margin-top: 20px; font-size: 12px; color: #666; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h2>Evento - Booking Receipt</h2>
+                <p>Booking ID: ${document.getElementById('booking-id').textContent}</p>
+                <p>Date: ${document.getElementById('booking-date').textContent}</p>
+            </div>
+            <div class="details">
+                ${document.getElementById('receipt-items').innerHTML.replace(/receipt-item/g, 'item')}
+            </div>
+            <div class="total">
+                Total Amount: ₹${document.getElementById('receipt-total').textContent}
+            </div>
+            <div class="info">
+                <p>Thank you for booking with Evento!</p>
+                <p>For any queries, contact: info@evento.com | +123-456-7890</p>
+            </div>
+        </body>
+        </html>
+      `;
+      
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.print();
+    }
+
+    // Notification function
+    function showNotification(message, type = 'success') {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.className = `notification ${type === 'error' ? 'error' : ''}`;
+      notification.style.display = 'block';
+      
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 3000);
+    }
+
+    // Gallery functionality
+    let currentImageIndex = 0;
+    const likedImages = new Set();
+
+    function showImage(index) {
+      currentImageIndex = index;
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      
+      lightboxImg.src = galleryImages[index].src;
+      lightboxCaption.textContent = galleryImages[index].caption;
+      document.getElementById('lightbox').classList.add('active');
+    }
+
+    function navigateImage(direction) {
+      currentImageIndex = (currentImageIndex + direction + galleryImages.length) % galleryImages.length;
+      showImage(currentImageIndex);
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    function shareImage(index) {
+      const imageUrl = galleryImages[index].src;
+      const tempInput = document.createElement('input');
+      tempInput.value = imageUrl;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      showNotification('Image URL copied to clipboard!');
+    }
+
+    function likeImage(index) {
+      const likeBtn = document.querySelectorAll('.gallery-action-btn')[index * 3 + 2];
+      const heartIcon = likeBtn.querySelector('i');
+
+      if (likedImages.has(index)) {
+        likedImages.delete(index);
+        heartIcon.className = 'far fa-heart';
+      } else {
+        likedImages.add(index);
+        heartIcon.className = 'fas fa-heart';
+        likeBtn.classList.add('liked');
+        setTimeout(() => {
+          likeBtn.classList.remove('liked');
+        }, 600);
+      }
+    }
+
+    // Virtual Tour functionality
+    let currentTourIndex = 0;
+    
+    function showVirtualTour(hall) {
+      currentHall = hall;
+      currentTourIndex = 0;
+      
+      const tour = virtualTours[hall];
+      if (!tour) {
+        showNotification('Virtual tour not available for this hall yet.', 'error');
+        return;
+      }
+      
+      document.getElementById('tour-title').textContent = tour.title;
+      updateTourView();
+      
+      document.querySelectorAll('.hotspot-btn').forEach((btn, index) => {
+        btn.classList.remove('active');
+        if (index === 0) btn.classList.add('active');
+      });
+      
+      document.getElementById('virtualTourModal').classList.add('active');
+    }
+
+    function closeVirtualTour() {
+      document.getElementById('virtualTourModal').classList.remove('active');
+    }
+
+    function navigateTour(direction) {
+      const tour = virtualTours[currentHall];
+      currentTourIndex = (currentTourIndex + direction + tour.views.length) % tour.views.length;
+      updateTourView();
+      updateHotspotButtons();
+    }
+
+    function changeTourView(index) {
+      const tour = virtualTours[currentHall];
+      if (index < tour.views.length) {
+        currentTourIndex = index;
+        updateTourView();
+        updateHotspotButtons();
+      }
+    }
+
+    function updateTourView() {
+      const tour = virtualTours[currentHall];
+      const currentView = tour.views[currentTourIndex];
+      
+      document.getElementById('tour-current-image').src = currentView.image;
+      document.getElementById('tour-description').textContent = currentView.description;
+    }
+
+    function updateHotspotButtons() {
+      document.querySelectorAll('.hotspot-btn').forEach((btn, index) => {
+        if (index === currentTourIndex) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    // Event listeners for closing modals
+    document.addEventListener('click', function(event) {
+      // Close modals when clicking outside
+      const serviceModals = document.querySelectorAll('.service-modal');
+      serviceModals.forEach(modal => {
+        if (event.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+      
+      const lightbox = document.getElementById('lightbox');
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+      
+      const virtualTour = document.getElementById('virtualTourModal');
+      if (event.target === virtualTour) {
+        closeVirtualTour();
+      }
+      
+      const bookingModal = document.getElementById('bookingModal');
+      if (event.target === bookingModal) {
+        closeBookingModal();
+      }
+      
+      const receiptModal = document.getElementById('receiptModal');
+      if (event.target === receiptModal) {
+        closeReceiptModal();
+      }
+    });
+
+    document.addEventListener('keydown', function(event) {
+      // Keyboard navigation
+      const lightbox = document.getElementById('lightbox');
+      if (lightbox.classList.contains('active')) {
+        if (event.key === 'Escape') {
+          closeLightbox();
+        } else if (event.key === 'ArrowLeft') {
+          navigateImage(-1);
+        } else if (event.key === 'ArrowRight') {
+          navigateImage(1);
+        }
+      }
+      
+      const virtualTour = document.getElementById('virtualTourModal');
+      if (virtualTour.classList.contains('active')) {
+        if (event.key === 'Escape') {
+          closeVirtualTour();
+        } else if (event.key === 'ArrowLeft') {
+          navigateTour(-1);
+        } else if (event.key === 'ArrowRight') { 
+          navigateTour(1);
+        }
+      }
+      
+      // Close modals with Escape key
+      const modals = document.querySelectorAll('.service-modal, .booking-modal, .receipt-modal');
+      modals.forEach(modal => {
+        if (modal.classList.contains('active') && event.key === 'Escape') {
+          modal.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

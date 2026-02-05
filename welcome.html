@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evento - Welcome</title>
+  <style>
+    /* Full screen black background */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(135deg, #000000, #1a1a2e, #16213e);
+      overflow: hidden;
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* Logo container */
+    .logo-container {
+      text-align: center;
+      z-index: 2;
+    }
+
+    /* Main logo style */
+    .main-logo {
+      font-size: 5rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    .main-logo span {
+      color: #3867d6;
+    }
+
+    /* Tagline style */
+    .tagline {
+      color: #fff;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      letter-spacing: 2px;
+      opacity: 0;
+      animation: fadeInUp 1.5s ease 0.5s forwards;
+    }
+
+    /* Loading bar container */
+    .loading-container {
+      width: 300px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    /* Animated loading bar */
+    .loading-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #3867d6, #4b7bec, #3867d6);
+      border-radius: 10px;
+      animation: loadBar 3s ease-in-out forwards;
+      position: relative;
+    }
+
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 1.5s infinite;
+    }
+
+    /* Loading text */
+    .loading-text {
+      color: #ccc;
+      font-size: 1rem;
+      margin-top: 1rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 1s forwards;
+    }
+
+    /* Manual navigation buttons */
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards;
+      z-index: 3;
+    }
+
+    .nav-btn {
+      background: rgba(56, 103, 214, 0.8);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      min-width: 120px;
+    }
+
+    .nav-btn:hover {
+      background: #3867d6;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(56, 103, 214, 0.4);
+    }
+
+    .nav-btn.guest {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-btn.guest:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Background animation */
+    .bg-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 103, 214, 0.1) 0%, transparent 70%);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .bg-circle:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .bg-circle:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      top: 60%;
+      right: 10%;
+      animation-delay: 2s;
+    }
+
+    .bg-circle:nth-child(3) {
+      width: 150px;
+      height: 150px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes loadBar {
+      0% {
+        width: 0%;
+      }
+      50% {
+        width: 70%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-20px) scale(1.05);
+      }
+    }
+
+    /* Optional smooth fade-out before redirect */
+    .fade-out {
+      animation: fadeOut 1s ease forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+      }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .main-logo {
+        font-size: 3.5rem;
+      }
+      
+      .tagline {
+        font-size: 1.2rem;
+      }
+      
+      .loading-container {
+        width: 250px;
+      }
+
+      .nav-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-logo {
+        font-size: 2.8rem;
+      }
+      
+      .tagline {
+        font-size: 1rem;
+        letter-spacing: 1px;
+      }
+      
+      .loading-container {
+        width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Animation -->
+  <div class="bg-animation">
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="logo-container">
+    <div class="main-logo">
+      <span>e</span>vento
+    </div>
+    
+    <div class="tagline">
+      Creating Unforgettable Moments
+    </div>
+    
+    <div class="loading-container">
+      <div class="loading-bar"></div>
+    </div>
+    
+    <div class="loading-text">
+      Loading your premium event experience...
+    </div>
+
+    <!-- Manual Navigation Buttons -->
+    <div class="nav-buttons">
+      <a href="/login" class="nav-btn">Login</a>
+      <a href="/register" class="nav-btn">Register</a>
+      <a href="/mainhome" class="nav-btn guest">Continue as Guest</a>
+    </div>
+  </div>
+
+  <script>
+    // Option 1: Manual buttons are already there, but you can keep auto-redirect too
+    // 5 सेकंदानंतर automatic redirect (if user doesn't click manually)
+    setTimeout(() => {
+      // Only redirect if user hasn't clicked any button
+      if (!window.userClicked) {
+        document.body.classList.add("fade-out");
+        setTimeout(() => {
+          window.location.href = "/mainhome";
+        }, 1000);
+      }
+    }, 5000);
+
+    // Track if user clicked any button
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        window.userClicked = true;
+      });
+    });
+
+    // Add some interactive effects
+    document.addEventListener('mousemove', (e) => {
+      const circles = document.querySelectorAll('.bg-circle');
+      const mouseX = e.clientX / window.innerWidth;
+      const mouseY = e.clientY / window.innerHeight;
+      
+      circles.forEach((circle, index) => {
+        const speed = (index + 1) * 0.5;
+        const x = (mouseX * speed * 100) - 50;
+        const y = (mouseY * speed * 100) - 50;
+        
+        circle.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+  </script>
+</body>
+</html>

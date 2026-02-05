@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Evento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    :root {
+      --main-color: #3867d6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    body {
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #222;
+      padding: 2rem 3rem;
+      border-radius: 10px;
+      width: 350px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .login-container h2 {
+      color: var(--main-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 5px;
+      background: #333;
+      color: #fff;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .password-container input {
+      padding-right: 40px;
+    }
+
+    .password-container i {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #ccc;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 1rem;
+      background: var(--main-color);
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      color: #fff;
+      transition: 0.3s ease;
+    }
+
+    .login-container button:hover {
+      background: #2a4bb8;
+    }
+
+    .login-container a {
+      color: #ccc;
+      font-size: 0.9rem;
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .login-container a:hover {
+      color: var(--main-color);
+    }
+
+    .flash-messages {
+      margin-bottom: 1rem;
+    }
+
+    .flash-message {
+      padding: 0.8rem;
+      border-radius: 5px;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .flash-success {
+      background: #2ecc71;
+      color: #fff;
+    }
+
+    .flash-error {
+      background: #e74c3c;
+      color: #fff;
+    }
+
+    @media (max-width: 500px) {
+      .login-container {
+        width: 90%;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login to Evento</h2>
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+    
+    <form method="POST" action="/login_user" id="loginForm">
+      <input type="email" name="email" placeholder="Email" required>
+      
+      <div class="password-container">
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <i class="fas fa-eye" id="togglePassword"></i>
+      </div>
+
+      <button type="submit" id="loginBtn">Login</button>   
+    </form>
+
+    <a href="/register">Create an Account</a>
+    <a href="/create_test_user" style="margin-top: 10px; color: #ff9900;">Create Test User</a>
+    <a href="/welcome" style="margin-top: 10px;">← Back to Welcome Page</a>
+  </div>
+
+  <script>
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+    const loginBtn = document.querySelector("#loginBtn");
+    const loginForm = document.querySelector("#loginForm");
+
+    togglePassword.addEventListener("click", function () {
+      const type = password.getAttribute("type") === "password" ? "text" : "password";
+      password.setAttribute("type", type);
+      this.classList.toggle("fa-eye-slash");
+    });
+
+    // Form submission handling
+    loginForm.addEventListener('submit', function(e) {
+      console.log('Login form submitted');
+      loginBtn.disabled = true;
+      loginBtn.innerHTML = 'Logging in...';
+    });
+
+    // Auto hide flash messages
+    setTimeout(() => {
+      const flashMessages = document.querySelector('.flash-messages');
+      if (flashMessages) {
+        flashMessages.style.display = 'none';
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
