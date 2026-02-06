@@ -292,7 +292,7 @@ def admin_login_page():
         if user and user.is_admin:
             return redirect(url_for('admin_dashboard'))
     # Note: File name has space, so use 'admin login.html'
-    return render_template('admin login.html')
+    return render_template('adminlogin.html')
 
 @app.route('/login_user', methods=['POST'])
 def login_user():
@@ -913,4 +913,5 @@ def create_test_user():
     return 'Test user already exists'
 
 if __name__ == '__main__':
+
     app.run(debug=True, port=5000)
