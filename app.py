@@ -655,6 +655,274 @@ def admin_delete_user(user_id):
         print(f"Admin delete user error: {str(e)}")
         return jsonify({'success': False, 'message': str(e)})
 
+# ========== ADMIN: SERVICES MANAGEMENT ==========
+@app.route('/admin/services', methods=['GET'])
+def admin_get_services():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    services = Service.query.all()
+    return jsonify({'success': True, 'services': [{
+        'id': s.id,
+        'name': s.name,
+        'description': s.description,
+        'price': s.price,
+        'category': s.category,
+        'is_active': s.is_active
+    } for s in services]})
+
+@app.route('/admin/services', methods=['POST'])
+def admin_add_service():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    data = request.get_json()
+    try:
+        service = Service(
+            name=data['name'],
+            description=data.get('description', ''),
+            price=int(data['price']),
+            category=data.get('category', ''),
+            is_active=data.get('is_active', True)
+        )
+        db.session.add(service)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Service added successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/admin/services/<int:id>', methods=['PUT'])
+def admin_update_service(id):
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    service = db.session.get(Service, id)
+    if not service:
+        return jsonify({'success': False, 'message': 'Service not found'})
+
+    data = request.get_json()
+    try:
+        service.name = data.get('name', service.name)
+        service.description = data.get('description', service.description)
+        service.price = int(data.get('price', service.price))
+        service.category = data.get('category', service.category)
+        service.is_active = data.get('is_active', service.is_active)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Service updated successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/admin/services/<int:id>', methods=['DELETE'])
+def admin_delete_service(id):
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    service = db.session.get(Service, id)
+    if not service:
+        return jsonify({'success': False, 'message': 'Service not found'})
+    try:
+        db.session.delete(service)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Service deleted successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
+
+# ========== ADMIN: HALLS MANAGEMENT ==========
+@app.route('/admin/halls', methods=['GET'])
+def admin_get_halls():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    halls = Hall.query.all()
+    return jsonify({'success': True, 'halls': [{
+        'id': h.id,
+        'name': h.name,
+        'location': h.location,
+        'description': h.description,
+        'price': h.price,
+        'capacity': h.capacity,
+        'image_url': h.image_url,
+        'is_active': h.is_active
+    } for h in halls]})
+
+@app.route('/admin/halls', methods=['POST'])
+def admin_add_hall():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    data = request.get_json()
+    try:
+        hall = Hall(
+            name=data['name'],
+            location=data.get('location', ''),
+            description=data.get('description', ''),
+            price=int(data['price']),
+            capacity=int(data.get('capacity', 0)),
+            image_url=data.get('image_url', ''),
+            is_active=data.get('is_active', True)
+        )
+        db.session.add(hall)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Hall added successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/admin/halls/<int:id>', methods=['PUT'])
+def admin_update_hall(id):
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    hall = db.session.get(Hall, id)
+    if not hall:
+        return jsonify({'success': False, 'message': 'Hall not found'})
+
+    data = request.get_json()
+    try:
+        hall.name = data.get('name', hall.name)
+        hall.location = data.get('location', hall.location)
+        hall.description = data.get('description', hall.description)
+        hall.price = int(data.get('price', hall.price))
+        hall.capacity = int(data.get('capacity', hall.capacity))
+        hall.image_url = data.get('image_url', hall.image_url)
+        hall.is_active = data.get('is_active', hall.is_active)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Hall updated successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/admin/halls/<int:id>', methods=['DELETE'])
+def admin_delete_hall(id):
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    hall = db.session.get(Hall, id)
+    if not hall:
+        return jsonify({'success': False, 'message': 'Hall not found'})
+    try:
+        db.session.delete(hall)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Hall deleted successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
+
+# ========== ADMIN: PACKAGES MANAGEMENT ==========
+@app.route('/admin/packages', methods=['GET'])
+def admin_get_packages():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    packages = Package.query.all()
+    return jsonify({'success': True, 'packages': [{
+        'id': p.id,
+        'name': p.name,
+        'description': p.description,
+        'price': p.price,
+        'features': p.features,
+        'is_active': p.is_active
+    } for p in packages]})
+
+@app.route('/admin/packages', methods=['POST'])
+def admin_add_package():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    data = request.get_json()
+    try:
+        package = Package(
+            name=data['name'],
+            description=data.get('description', ''),
+            price=int(data['price']),
+            features=data.get('features', ''),
+            is_active=data.get('is_active', True)
+        )
+        db.session.add(package)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Package added successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/admin/packages/<int:id>', methods=['PUT'])
+def admin_update_package(id):
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    package = db.session.get(Package, id)
+    if not package:
+        return jsonify({'success': False, 'message': 'Package not found'})
+
+    data = request.get_json()
+    try:
+        package.name = data.get('name', package.name)
+        package.description = data.get('description', package.description)
+        package.price = int(data.get('price', package.price))
+        package.features = data.get('features', package.features)
+        package.is_active = data.get('is_active', package.is_active)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Package updated successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/admin/packages/<int:id>', methods=['DELETE'])
+def admin_delete_package(id):
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+    user = db.session.get(User, session['user_id'])
+    if not user or not user.is_admin:
+        return jsonify({'success': False, 'message': 'Unauthorized'})
+
+    package = db.session.get(Package, id)
+    if not package:
+        return jsonify({'success': False, 'message': 'Package not found'})
+    try:
+        db.session.delete(package)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Package deleted successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'message': str(e)})
+
+# ========== OTHER ADMIN ROUTES ==========
 @app.route('/admin/reports')
 def admin_reports():
     if 'user_id' not in session:
@@ -913,5 +1181,4 @@ def create_test_user():
     return 'Test user already exists'
 
 if __name__ == '__main__':
-
     app.run(debug=True, port=5000)
